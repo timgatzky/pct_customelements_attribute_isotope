@@ -96,9 +96,12 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 		$objTemplate->submitLabel = $GLOBALS['TL_LANG']['MSC']['buttonLabel']['add_to_cart'];
 		
 		// variants
-		$arrVariantAttributes = $objProduct->getVariantAttributes() ?: array();
-		if(!empty($arrVariantAttributes))
+		if($objProduct->hasVariants())
 		{
+			#$objProduct->pid = 1;
+			
+			$objTemplate->hasVariants = true;
+			
 			$arrVariantOptions = array();
 			
 			$objResult = $objDatabase = \Database::getInstance()->prepare("SELECT * FROM tl_iso_product WHERE id=?")->limit(1)->execute($objProduct->id);
@@ -110,10 +113,12 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 			// @var object Helper instance to access protected methods
 			$objProductHelper = new \PCT\CustomElements\Attributes\Isotope\ProductHelper($objResult);
 			
-			foreach ($arrVariantAttributes  as $attribute) 
+			$arrVariants = array();
+			foreach($objProduct->getVariantAttributes()  as $attribute) 
 			{
 	            $arrData = $GLOBALS['TL_DCA']['tl_iso_product']['fields'][$attribute];
-				if ($arrData['attributes']['customer_defined'] || $arrData['attributes']['variant_option']) 
+	            
+	            if($arrData['attributes']['customer_defined'] || $arrData['attributes']['variant_option']) 
 				{
 					$strWidget = $objProductHelper->generateProductOptionWidget($attribute, $arrVariantOptions, array());
 					if($strWidget != '') 
@@ -126,19 +131,53 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 	                }
 				}
 	        }
+			
+			// add to template
+			$objTemplate->variants = $arrVariants;
 		}
 		
-		$objTemplate->hasVariants = (count($arrVariants) > 0 ? true : false);
-		$objTemplate->variants = $arrVariants;
-		\PC::debug($arrVariants);
-		
-		
+		\PC::debug(\Input::post('FORM_SUBMIT'));
 		// simulate addToCart
 		if(\Input::post('FORM_SUBMIT') == $strIdent)
 		{
-			// @var object \Isotope\Frontend
-			$objIsotopeFrontend = new \Isotope\Frontend;
-			$objIsotopeFrontend->addToCart($objProduct,$arrConfig);
+			// variant has been submitted
+			if($objProduct->hasVariants())
+			{
+				$arrQuery = array();
+				foreach($objProduct->getVariantAttributes()  as $attribute) 
+				{
+					// attribute value has been submitted
+					if(\Input::post($attribute) != '')
+					{
+						$arrQuery[$attribute] = \Input::post($attribute);
+						
+						$arrQuery2[] = $attribute.'="'.\Input::post($attribute).'"';
+					}
+				}
+				
+				// find the variant product 
+				if(count($arrQuery) > 0)
+				{
+					$arrQuery['pid'] = $objProduct->id;
+					$arrQuery['published'] = 1;
+					
+					$strTable = \Isotope\Model\Product::getTable();
+					foreach(array_keys($arrQuery) as $col)
+					{
+						$columns[] = $strTable.'.'.$col.'=?';
+					}
+					$values = array_values($arrQuery);
+					
+					$objProduct = \Isotope\Model\Product::findOneBy($columns,$values);
+				}
+			}
+			
+			if($objProduct !== null)
+			{
+				// @var object \Isotope\Frontend
+				$objIsotopeFrontend = new \Isotope\Frontend;
+				$objIsotopeFrontend->addToCart($objProduct,$arrConfig);
+			}
 		}
 		
 		return $objTemplate->parse();

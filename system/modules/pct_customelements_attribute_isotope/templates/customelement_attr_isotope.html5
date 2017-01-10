@@ -20,10 +20,12 @@
 <input type="number" name="quantity_requested" value="" placeholder="1" min="1" max="10">
 
 <?php if($this->hasVariants): ?>
+<div class="options">
 <!-- variants -->
 <?php foreach($this->variants as $name => $variant): ?>
 <?= $variant['html']; ?>
 <?php endforeach; ?>
+</div>
 <?php endif; ?>
 
 <!-- add to cart -->
