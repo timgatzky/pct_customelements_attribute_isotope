@@ -24,7 +24,7 @@ $strType = 'isotope';
  */
 $arrPalettes = $objDcaHelper->getPalettesAsArray('default');
 $arrPalettes = $objDcaHelper->removeField('eval_tl_class_w50');
-$arrPalettes['settings_legend'] = array('options');
+$arrPalettes['settings_legend'] = array();
 $GLOBALS['TL_DCA']['tl_pct_customelement_attribute']['palettes'][$strType] = $objDcaHelper->generatePalettes($arrPalettes);
 
 
@@ -38,7 +38,4 @@ if($objDcaHelper->getActiveRecord()->type == $strType)
 		// Show template info
 		\Message::addInfo(sprintf($GLOBALS['TL_LANG']['PCT_CUSTOMCATALOG']['MSC']['templateInfo_attribute'], 'customelement_attr_isotope'));
 	}
-	
-	$GLOBALS['TL_DCA']['tl_pct_customelement_attribute']['fields']['options'][$strType]['options'] = array('variants');
-	$GLOBALS['TL_DCA']['tl_pct_customelement_attribute']['fields']['options'][$strType]['reference'] = &$GLOBALS['TL_LANG']['tl_pct_customelement_attribute']['options'][$type];
 }

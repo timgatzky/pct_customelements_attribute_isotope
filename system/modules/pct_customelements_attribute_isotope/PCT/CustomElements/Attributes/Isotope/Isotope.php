@@ -96,10 +96,8 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 		$objTemplate->submitLabel = $GLOBALS['TL_LANG']['MSC']['buttonLabel']['add_to_cart'];
 		
 		// variants
-		$arrOptions = deserialize($objAttribute->get('options'));
 		$arrVariantAttributes = $objProduct->getVariantAttributes() ?: array();
-		$arrVariants = array();
-		if(in_array('variants', $arrOptions) && !empty($arrVariantAttributes))
+		if(!empty($arrVariantAttributes))
 		{
 			$arrVariantOptions = array();
 			
