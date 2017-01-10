@@ -1,0 +1,26 @@
+<?php
+/**
+ * Custom elements isotope "add to cart" attribute template
+ */
+?>
+
+<?php if(!$this->empty): ?>
+<div <?= $this->cssID; ?> <?php if($this->class): ?>class="<?= $this->class; ?>"<?php endif; ?>>
+
+<!-- product name -->
+<?= $this->product->name; ?>
+
+<form action="<?= $this->action; ?>" id="<?= $this->formID; ?>" name="<?= $this->formID; ?>" method="post">
+<input type="hidden" name="FORM_SUBMIT" value="<?= $this->formID; ?>">
+<input type="hidden" name="REQUEST_TOKEN" value="<?= REQUEST_TOKEN; ?>">
+<input type="hidden" name="AJAX_PRODUCT" value="<?= $this->product->id; ?>">
+<!-- jump to page id -->
+<input type="hidden" name="iso_jumpto" value="">
+<!-- quantity -->
+<input type="number" name="quantity_requested" value="" placeholder="<?= 1; ?>" min="<?= $this->min; ?>" max="<?= $this->max; ?>">
+<!-- add to cart -->
+<input type="submit" class="submit add_to_cart" name="add_to_cart" value="<?= $this->submitLabel; ?>">
+</form>
+
+</div>
+<?php endif; ?>
