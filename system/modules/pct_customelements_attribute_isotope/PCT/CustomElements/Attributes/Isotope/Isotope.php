@@ -98,8 +98,6 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 		// variants
 		if($objProduct->hasVariants())
 		{
-			#$objProduct->pid = 1;
-			
 			$objTemplate->hasVariants = true;
 			
 			$arrVariantOptions = array();
@@ -136,7 +134,6 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 			$objTemplate->variants = $arrVariants;
 		}
 		
-		\PC::debug(\Input::post('FORM_SUBMIT'));
 		// simulate addToCart
 		if(\Input::post('FORM_SUBMIT') == $strIdent)
 		{
