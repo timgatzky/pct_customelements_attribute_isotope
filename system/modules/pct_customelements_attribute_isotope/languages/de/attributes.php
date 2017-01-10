@@ -16,4 +16,4 @@
 /**
  * Attributes
  */
-$GLOBALS['TL_LANG']['PCT_CUSTOMELEMENTS']['ATTRIBUTES']['isotope'] = array('Isotope eCommerce','Dieses Attribut fügt eine im Backend eine Auswahl zu einem bestehenden Isotope Produkt ein. Die Frontend-Ausgabe liefert den Warenkorb-Button.');
+$GLOBALS['TL_LANG']['PCT_CUSTOMELEMENTS']['ATTRIBUTES']['isotope'] = array('Isotope eCommerce','Dieses Attribut fügt im Backend eine Auswahl zu einem bestehenden Isotope Produkt ein. Die Frontend-Ausgabe liefert den Warenkorb-Button.');
