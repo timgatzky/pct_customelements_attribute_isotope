@@ -17,7 +17,7 @@
 <!-- jump to page id -->
 <input type="hidden" name="iso_jumpto" value="">
 <!-- quantity -->
-<input type="number" name="quantity_requested" value="" placeholder="<?= 1; ?>" min="<?= $this->min; ?>" max="<?= $this->max; ?>">
+<input type="number" name="quantity_requested" value="" placeholder="1" min="1" max="10">
 <!-- add to cart -->
 <input type="submit" class="submit add_to_cart" name="add_to_cart" value="<?= $this->submitLabel; ?>">
 </form>

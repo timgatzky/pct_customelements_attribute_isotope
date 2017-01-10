@@ -89,8 +89,6 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 		$objTemplate->formID = $strIdent;
 		$objTemplate->action = \Environment::get('request');
 		$objTemplate->submitLabel = $GLOBALS['TL_LANG']['MSC']['buttonLabel']['add_to_cart'];
-		$objTemplate->min = $objAttribute->get('eval_minlength') ?: 1;
-		$objTemplate->max = $objAttribute->get('eval_maxlength') ?: 10;
 		
 		// simulate addToCart
 		if(\Input::post('FORM_SUBMIT') == $strIdent)
