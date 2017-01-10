@@ -19,7 +19,7 @@ namespace PCT\CustomElements\Attributes;
 
 /**
  * Class file
- * AttributeGallery
+ * Isotope
  */
 class Isotope extends \PCT\CustomElements\Core\Attribute
 {
@@ -75,6 +75,11 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 			$objTemplate->parse();
 		}
 		
+		// @var object 
+		$objModule = new \StdClass;
+		$objModule->iso_use_quantity = true;
+		$arrConfig = array('module'=>$objModule);	
+		
 		// unique form name
 		$strIdent = 'item_'.$objAttribute->getActiveRecord()->id.'_attr_'.$objAttribute->id.'_product_'.$varValue;
 		
@@ -90,17 +95,52 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 		$objTemplate->action = \Environment::get('request');
 		$objTemplate->submitLabel = $GLOBALS['TL_LANG']['MSC']['buttonLabel']['add_to_cart'];
 		
+		// variants
+		$arrOptions = deserialize($objAttribute->get('options'));
+		$arrVariantAttributes = $objProduct->getVariantAttributes() ?: array();
+		$arrVariants = array();
+		if(in_array('variants', $arrOptions) && !empty($arrVariantAttributes))
+		{
+			$arrVariantOptions = array();
+			
+			$objResult = $objDatabase = \Database::getInstance()->prepare("SELECT * FROM tl_iso_product WHERE id=?")->limit(1)->execute($objProduct->id);
+			
+			// unregistrer current model	
+			$objRegistry = \Contao\Model\Registry::getInstance();
+			$objRegistry->unregister($objProduct);
+			
+			// @var object Helper instance to access protected methods
+			$objProductHelper = new \PCT\CustomElements\Attributes\Isotope\ProductHelper($objResult);
+			
+			foreach ($arrVariantAttributes  as $attribute) 
+			{
+	            $arrData = $GLOBALS['TL_DCA']['tl_iso_product']['fields'][$attribute];
+				if ($arrData['attributes']['customer_defined'] || $arrData['attributes']['variant_option']) 
+				{
+					$strWidget = $objProductHelper->generateProductOptionWidget($attribute, $arrVariantOptions, array());
+					if($strWidget != '') 
+	                {
+	                    $arrVariants[$attribute] = array_merge($arrData, array
+	                    (
+	                        'name'    => $attribute,
+	                        'html'    => $strWidget,
+	                    ));
+	                }
+				}
+	        }
+		}
+		
+		$objTemplate->hasVariants = (count($arrVariants) > 0 ? true : false);
+		$objTemplate->variants = $arrVariants;
+		\PC::debug($arrVariants);
+		
+		
 		// simulate addToCart
 		if(\Input::post('FORM_SUBMIT') == $strIdent)
 		{
-			// @var object 
-			$objModule = new \StdClass;
-			$objModule->iso_use_quantity = true;
-			$objModule->iso_addProductJumpTo = \Input::post('iso_jumpto') ?: 0;
-			
 			// @var object \Isotope\Frontend
 			$objIsotopeFrontend = new \Isotope\Frontend;
-			$objIsotopeFrontend->addToCart($objProduct,array('module'=>$objModule));
+			$objIsotopeFrontend->addToCart($objProduct,$arrConfig);
 		}
 		
 		return $objTemplate->parse();

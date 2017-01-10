@@ -27,7 +27,9 @@ ClassLoader::addNamespaces(array
  */
 ClassLoader::addClasses(array
 (
-	'PCT\CustomElements\Attributes\Isotope'	=> 'system/modules/pct_customelements_attribute_isotope/PCT/CustomElements/Attributes/Isotope/Isotope.php',	
+	'PCT\CustomElements\Attributes\Isotope'					=> 'system/modules/pct_customelements_attribute_isotope/PCT/CustomElements/Attributes/Isotope/Isotope.php',	
+	'PCT\CustomElements\Attributes\Isotope\ProductHelper'	=> 'system/modules/pct_customelements_attribute_isotope/PCT/CustomElements/Attributes/Isotope/ProductHelper.php',	
+
 ));
 
 
