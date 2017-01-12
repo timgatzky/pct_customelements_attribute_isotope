@@ -1,5 +1,2 @@
-### 1.0.1
-Fixed: Git did not use correct spelling of the ProductHelper class file
-
 ### 1.0.0
 Initial
