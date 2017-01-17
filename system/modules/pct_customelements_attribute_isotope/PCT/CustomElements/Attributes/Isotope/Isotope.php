@@ -72,9 +72,9 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 		if($objProduct === null)
 		{
 			$objTemplate->empty = true;
-			$objTemplate->parse();
+			return $objTemplate->parse();
 		}
-		
+				
 		// @var object 
 		$objModule = new \StdClass;
 		$objModule->iso_use_quantity = true;
