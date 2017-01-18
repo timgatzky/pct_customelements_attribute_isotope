@@ -3,9 +3,6 @@ pct_customelements_attribute_isotope: Eclipse demo assets
 
 Isotope eCommerce attribute for PCT CustomElements and CustomCatalog
 
-About
----
-
 Installation
 ---
 - Copy customcatalog_catalog_reader.html5 to the /templates folder in your contao installation
