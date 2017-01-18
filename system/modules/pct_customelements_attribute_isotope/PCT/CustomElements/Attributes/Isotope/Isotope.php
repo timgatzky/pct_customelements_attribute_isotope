@@ -78,6 +78,7 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 		// @var object 
 		$objModule = new \StdClass;
 		$objModule->iso_use_quantity = true;
+		$objModule->iso_addProductJumpTo = \Input::post('iso_jumpto') ?: 0;
 		$arrConfig = array('module'=>$objModule);	
 		
 		// unique form name
@@ -147,8 +148,6 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 					if(\Input::post($attribute) != '')
 					{
 						$arrQuery[$attribute] = \Input::post($attribute);
-						
-						$arrQuery2[] = $attribute.'="'.\Input::post($attribute).'"';
 					}
 				}
 				
