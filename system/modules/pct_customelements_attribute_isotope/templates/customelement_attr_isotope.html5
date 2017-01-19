@@ -32,5 +32,10 @@
 <input type="submit" class="submit add_to_cart" name="add_to_cart" value="<?= $this->submitLabel; ?>">
 </form>
 
+<!-- custom "added to cart" info -->
+<?php if($this->addedToCart): ?>
+<div class="addedToCart"><?= $this->addedToCart; ?></div>
+<?php endif; ?>
+
 </div>
 <?php endif; ?>

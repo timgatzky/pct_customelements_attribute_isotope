@@ -138,6 +138,8 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 		// simulate addToCart
 		if(\Input::post('FORM_SUBMIT') == $strIdent)
 		{
+			$objTemplate->submitted = true;
+			
 			// variant has been submitted
 			if($objProduct->hasVariants())
 			{
@@ -170,10 +172,20 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 			
 			if($objProduct !== null)
 			{
+				// store the product id in the session
+				\Session::getInstance()->set('addedToCard',$objProduct->id);
+				
 				// @var object \Isotope\Frontend
 				$objIsotopeFrontend = new \Isotope\Frontend;
 				$objIsotopeFrontend->addToCart($objProduct,$arrConfig);
 			}
+		}
+		
+		if(\Session::getInstance()->get('addedToCard') == $objProduct->id)
+		{
+			$objTemplate->addedToCart = sprintf($GLOBALS['TL_LANG']['addedToCard_info'],$objProduct->name);
+			// remove from session
+			\Session::getInstance()->remove('addedToCard');
 		}
 		
 		return $objTemplate->parse();
