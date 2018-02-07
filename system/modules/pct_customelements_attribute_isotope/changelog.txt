@@ -1,2 +1,6 @@
+### 1.1.0
+Added: A status message when product has been added to the cart
+Update: Added blank option setting for attribute
+
 ### 1.0.0
 Initial
