@@ -1,3 +1,9 @@
+### 1.1.2
+Fixed: Declaration error to generateProductOptionWidget
+
+### 1.1.1
+Added: composer.json
+
 ### 1.1.0
 Added: A status message when product has been added to the cart
 Update: Added blank option setting for attribute
