@@ -119,7 +119,7 @@ class Isotope extends \PCT\CustomElements\Core\Attribute
 	            
 	            if($arrData['attributes']['customer_defined'] || $arrData['attributes']['variant_option']) 
 				{
-					$strWidget = $objProductHelper->generateProductOptionWidget($attribute, $arrVariantOptions, array());
+					$strWidget = $objProductHelper->_generateProductOptionWidget($attribute, $arrVariantOptions, array());
 					if($strWidget != '') 
 	                {
 	                    $arrVariants[$attribute] = array_merge($arrData, array

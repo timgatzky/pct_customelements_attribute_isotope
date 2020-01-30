@@ -26,7 +26,7 @@ class ProductHelper extends \Isotope\Model\Product\Standard
 	/**
 	 * Public access to generateProductOptionWidget
 	 */
-	public function generateProductOptionWidget($strField, $arrVariantOptions, $arrAjaxOptions=array())
+	public function _generateProductOptionWidget($strField, $arrVariantOptions, $arrAjaxOptions)
 	{
 		return parent::generateProductOptionWidget($strField, $arrVariantOptions, $arrAjaxOptions);
 	}
